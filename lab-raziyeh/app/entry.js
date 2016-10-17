@@ -40,7 +40,7 @@ function CowsayController($log, $scope) {
 
   cowsayCtrl.resetCow = function() {
     $log.debug('cowsayCtrl.resetCow()');
-    cowsayCtrl.stateArray.length === 0 ? cowsayCtrl.show = false :cowsayCtrl.show = true;  
+    cowsayCtrl.stateArray.length === 0 ? cowsayCtrl.show = false :cowsayCtrl.show = true;
     cowsayCtrl.state = cowsay.say({text: cowsayCtrl.stateArray.pop()});
   };
 
