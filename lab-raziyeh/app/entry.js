@@ -16,7 +16,7 @@ const demoApp = angular.module('demoApp', []);
 demoApp.controller('CowsayController', ['$log', function ($log) {
   $log.debug('init CowsayController');
 
-  this.title = 'Moooooooo';
+  this.title = 'My Cowsay app';
   this.show = false;
   this.stateArray  = [];
   this.state = null;
@@ -40,12 +40,14 @@ demoApp.controller('CowsayController', ['$log', function ($log) {
       if (this.show === false)
         this.show = true;
     }
+    return this.state;
   };
 
   this.resetCow = function() {
     $log.debug('cowsayCtrl.resetCow()');
 
     this.stateArray.length === 0 ? this.show = false : this.show = true;
+    this.stateArray.pop();
     this.state = this.stateArray.pop();
   };
 }]);
