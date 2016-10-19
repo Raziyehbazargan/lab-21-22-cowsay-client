@@ -5,20 +5,25 @@
     <title>Cowsay Client</title>
   </head>
   <body>
-     <section ng-controller="CowsayController">
+     <section ng-controller="CowsayController as cowsayCtrl" ng-init="cowsayCtrl.currentCow ='kiss'">
         <h1> {{cowsayCtrl.title}} </h1>
-        <input type="text" ng-model="cowsayCtrl.text">
-        <button type="button" ng-click="cowsayCtrl.copyCow(cowsayCtrl.text)"> click me to apply cowsay </button>
-        <button type="button" ng-click="cowsayCtrl.resetCow()"> click me to to reset </button>
-        <select ng-model="cowsayCtrl.text">
-          <option ng-repeat="item in cowsayCtrl.stateArray" value="{{item}}">
-            {{item}}
-          </option>
-       </select>
+        <form name="cowsayForm" 
+              novalidate
+              ng-class="{'$app-bg': cowsayForm.$valid, '$app-bg-error': cowsayForm.$invalid}"
+              ng-submit="cowsayCtrl.copyCow(cowsayCtrl.text)">
+          <input type="text" ng-model="cowsayCtrl.text" ng-minlength="5" required>
+          <select ng-model="cowsayCtrl.currentCow">
+            <option ng-repeat="item in cowsayCtrl.cowfiles" value="{{item}}">
+              {{item}}
+            </option>
+          </select>
+          <button type="button" ng-click="cowsayCtrl.resetCow()"> click to reset </button>
+          <button type="submit">click me to copy cowsay </button>
+       </form>
         <pre>
           {{cowsayCtrl.updateCow(cowsayCtrl.text)}}
         </pre>
-         <pre ng-if="cowsayCtrl.show">
+         <pre ng-if="cowsayCtrl.show" ng-class="">
            {{cowsayCtrl.state}}
         </pre>
      </section>

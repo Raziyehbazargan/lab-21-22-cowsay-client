@@ -13,36 +13,40 @@ const angular = require('angular');
 const demoApp = angular.module('demoApp', []);
 
 //angular constructors
-demoApp.controller('CowsayController', ['$log','$scope', CowsayController]);
-
-function CowsayController($log, $scope) {
+demoApp.controller('CowsayController', ['$log', function ($log) {
   $log.debug('init CowsayController');
 
-  let cowsayCtrl = $scope.cowsayCtrl = {};
-  cowsayCtrl.title = 'Moooooooo';
-  cowsayCtrl.show = false;
-  cowsayCtrl.stateArray  = [];
-  cowsayCtrl.state = null;
+  this.title = 'Moooooooo';
+  this.show = false;
+  this.stateArray  = [];
+  this.state = null;
+  cowsay.list((err, cowfiles) => {
+    this.cowfiles = cowfiles;
+    this.currentCow = this.cowfiles[0];
+  });
 
-  cowsayCtrl.updateCow = function(input) {
+  this.updateCow = function(input) {
     $log.debug('cowsayCtrl.updateCow()');
-    return '\n' + cowsay.say({text: input || 'gimme something to say'});
+    return '\n' + cowsay.say({text: input || 'gimme something to say',  f: this.currentCow});
   };
 
-  cowsayCtrl.copyCow = function(input) {
+  this.copyCow = function(input) {
     $log.debug('cowsayCtrl.copyCow()');
-    cowsayCtrl.stateArray.push(input);
-    cowsayCtrl.state = cowsay.say({text: input});
+
+    if(input.length) {
+      this.state = this.updateCow(input);
+      this.stateArray.push(this.state);
     
-    if (cowsayCtrl.show === false)
-      cowsayCtrl.show = true;
+      if (this.show === false)
+        this.show = true;
+    }
   };
 
-  cowsayCtrl.resetCow = function() {
+  this.resetCow = function() {
     $log.debug('cowsayCtrl.resetCow()');
-    cowsayCtrl.stateArray.length === 0 ? cowsayCtrl.show = false :cowsayCtrl.show = true;
-    cowsayCtrl.state = cowsay.say({text: cowsayCtrl.stateArray.pop()});
-  };
 
-}
+    this.stateArray.length === 0 ? this.show = false : this.show = true;
+    this.state = this.stateArray.pop();
+  };
+}]);
 
