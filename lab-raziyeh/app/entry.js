@@ -1,7 +1,7 @@
 'use strict';
 
 //require webpack assets
-require('./scss/base.scss');
+require('./scss/main.scss');
 
 //npm modules
 const cowsay = require('cowsay-browser');

@@ -9,23 +9,29 @@
         <h1> {{cowsayCtrl.title}} </h1>
         <form name="cowsayForm" 
               novalidate
+              class="form-inline"
               ng-class="{'$app-bg': cowsayForm.$valid, '$app-bg-error': cowsayForm.$invalid}"
               ng-submit="cowsayCtrl.copyCow(cowsayCtrl.text)">
-          <input type="text" ng-model="cowsayCtrl.text" ng-minlength="5" required>
-          <select ng-model="cowsayCtrl.currentCow">
+          <input class="form-control" type="text" ng-model="cowsayCtrl.text" ng-minlength="5" required>
+          <select class="form-control" ng-model="cowsayCtrl.currentCow">
             <option ng-repeat="item in cowsayCtrl.cowfiles" value="{{item}}">
               {{item}}
             </option>
           </select>
-          <button type="button" ng-click="cowsayCtrl.resetCow()"> click to reset </button>
-          <button type="submit">click me to copy cowsay </button>
+          <button type="button" class="btn btn-warning" ng-click="cowsayCtrl.resetCow()"> click to reset </button>
+          <button type="submit" class="btn btn-primary">click me to copy cowsay </button>
        </form>
-        <pre>
+       <br/>
+        <pre class="col-md-6">
           {{cowsayCtrl.updateCow(cowsayCtrl.text)}}
         </pre>
-         <pre ng-if="cowsayCtrl.show" ng-class="">
+         <pre class="col-md-6" ng-if="cowsayCtrl.show" ng-class="">
            {{cowsayCtrl.state}}
         </pre>
+        <div ng-hide="cowsayCtrl.show" class="text-center">
+          <i class="fa fa-remove fa-3x"></i>
+          <h3 class="col-md-6 text-center" >There is no History</h3>
+        <div>
      </section>
   <script type="text/javascript" src="bundle.js"></script></body>
 </html>

@@ -3,18 +3,24 @@
 const HTMLPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const plugins = [
+  new HTMLPlugin({
+    template: `${__dirname}/app/index.html`,
+  }),
+  new ExtractTextPlugin('bundle.css'),
+];
+
 module.exports = {
   entry: `${__dirname}/app/entry.js`,
+  devtool: 'eval',
+  plugins,
   output: {
-    filename: 'bundle.js',
     path: 'build',
+    filename: 'bundle.js',
   },
-  plugins: [
-    new HTMLPlugin({
-      template: `${__dirname}/app/index.html`,
-    }),
-    new ExtractTextPlugin('bundle.css'),
-  ],
+  sassLoader: {
+    includePaths: [`${__dirname}/app/scss/lib`],
+  },
   module: {
     loaders: [
       {
@@ -27,8 +33,8 @@ module.exports = {
         loader: ExtractTextPlugin.extract('style', 'css!resolve-url!sass?sourceMap'),
       },
       {
-        test: /\.(eot|woff|ttf|svg).*/,
-        loader: 'url?limit=10000&name=fonts/[hash].[ext]',
+        test: /\.(woff|ttf|svg|eot).*/,
+        loader: 'url?limit=10000&name=font/[hash].[ext]',
       },
     ],
   },
